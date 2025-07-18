@@ -15,7 +15,7 @@ body:
       description: Введите сегодняшнюю дату (например, 2025-07-18)
       placeholder: 2025-07-18
     validations:
-      required: true
+      required: false
 
   - type: textarea
     id: notes
