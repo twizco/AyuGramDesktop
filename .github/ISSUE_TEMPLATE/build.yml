@@ -1,0 +1,27 @@
+name: Build request
+description: Запросить автоматическую сборку проекта
+title: "[BUILD]"
+labels: [build]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Пожалуйста, проверьте, что вы действительно хотите запустить сборку.
+
+  - type: input
+    id: build-date
+    attributes:
+      label: Дата сборки
+      description: Введите сегодняшнюю дату (например, 2025-07-18)
+      placeholder: 2025-07-18
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Дополнительные комментарии
+      description: (Необязательно) Добавьте комментарии к сборке
+      placeholder: Например, "Собрать debug-версию"
+    validations:
+      required: false
