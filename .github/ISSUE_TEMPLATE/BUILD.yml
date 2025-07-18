@@ -3,7 +3,11 @@ description: Запросить автоматическую сборку про
 title: "[BUILD]"
 labels: [build]
 body:
-  - type: markdown
+  - type: input
+    id: confirm
     attributes:
-      value: |
-        Нажмите "Submit new issue" для запуска сборки.
+      label: Подтвердите запуск сборки
+      description: Введите любое слово, чтобы подтвердить запуск сборки
+      placeholder: ok
+    validations:
+      required: true
