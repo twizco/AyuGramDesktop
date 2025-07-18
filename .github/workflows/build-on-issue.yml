@@ -1,0 +1,43 @@
+name: Build on [BUILD] Issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  build:
+    if: github.event.issue.title == '[BUILD]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout this repo (for workflow files)
+        uses: actions/checkout@v4
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Clone AyuGramDesktop repo
+        run: |
+          git clone --recursive https://github.com/AyuGram/AyuGramDesktop.git tdesktop
+
+      - name: Prepare libraries
+        run: |
+          chmod +x ./tdesktop/Telegram/build/prepare/linux.sh
+          ./tdesktop/Telegram/build/prepare/linux.sh
+
+      - name: Build project in Docker
+        working-directory: ./tdesktop
+        run: |
+          docker run --rm -u $(id -u):$(id -g) \
+            -v "$PWD:/usr/src/tdesktop" \
+            ghcr.io/telegramdesktop/tdesktop/centos_env:latest \
+            /usr/src/tdesktop/Telegram/build/docker/centos_env/build.sh \
+            -D TDESKTOP_API_ID=2040 \
+            -D TDESKTOP_API_HASH=b18441a1ff607e10a989891a5462e627
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tdesktop-build
+          path: ./tdesktop/out
