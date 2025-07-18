@@ -2,4 +2,8 @@ name: Build request
 description: Запросить автоматическую сборку проекта
 title: "[BUILD]"
 labels: [build]
-body: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Нажмите "Submit new issue" для запуска сборки.
